@@ -1,14 +1,16 @@
-1) Instalar as dependências:
+1) Install the dependencies:
 > npm i
 
-2) Rodar o projeto
+2) Run the project
 > ionic serve -l
 
 
-## Distância entre 2 pontos
+## Distance between 2 points
 
-Busca a latitude e longitude do dispositivo (ORIGEM);
+Search for device latitude and longitude (ORIGIN);
 
-Possui 2 inputs para definir latitude e longitude destino;
+It has 2 inputs to define target latitude and longitude;
 
-Botão para cálculo da distância e tempo aproximado.
+Button for calculating distance and approximate time.
+
+![View this](https://github.com/juniorabranches/googleMaps-Distance-Service/blob/master/src/assets/img.PNG?raw=true)
