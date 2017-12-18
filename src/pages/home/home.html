@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Distância entre pontos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div id="right-panel">
+       <div id="inputs">
+         <ion-row>
+           <ion-item>
+             <ion-input [(ngModel)]="latDest"
+                        type="text"
+                        placeholder="Latitude Destino"
+                        clearInput clearOnEdit="false">
+             </ion-input>
+           </ion-item>
+           <ion-item>
+             <ion-input [(ngModel)]="longDest"
+                        type="text"
+                        placeholder="Longitude Destino"
+                        clearInput clearOnEdit="false">
+             </ion-input>
+           </ion-item>
+         </ion-row>
+         <button ion-button block outline (click)="calcRota(latDest, longDest)">Calcular</button>
+       </div>
+       <div>
+         <strong>Resultado</strong>
+       </div>
+       <div id="output"></div>
+     </div>
+     <div id="map"></div>
+</ion-content>
