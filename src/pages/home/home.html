@@ -11,20 +11,44 @@
   <div id="right-panel">
        <div id="inputs">
          <ion-row>
-           <ion-item>
-             <ion-input [(ngModel)]="latDest"
-                        type="text"
-                        placeholder="Latitude Destino"
-                        clearInput clearOnEdit="false">
-             </ion-input>
-           </ion-item>
-           <ion-item>
-             <ion-input [(ngModel)]="longDest"
-                        type="text"
-                        placeholder="Longitude Destino"
-                        clearInput clearOnEdit="false">
-             </ion-input>
-           </ion-item>
+           <ion-col width-50>
+             <div>
+               <ion-badge  class="badgeOrigem">Origem</ion-badge>
+             </div>
+             <ion-item>
+               <ion-input [(ngModel)]="latOri"
+                          type="text"
+                          placeholder="Latitude Origem"
+                          clearInput clearOnEdit="false">
+               </ion-input>
+             </ion-item>
+             <ion-item>
+               <ion-input [(ngModel)]="longOri"
+                          type="text"
+                          placeholder="Longitude Origem"
+                          clearInput clearOnEdit="false">
+               </ion-input>
+             </ion-item>
+           </ion-col>
+           <ion-col width-50>
+             <div>
+               <ion-badge  class="badgeDestino">Destino</ion-badge>
+             </div>
+             <ion-item>
+               <ion-input [(ngModel)]="latDest"
+                          type="text"
+                          placeholder="Latitude Destino"
+                          clearInput clearOnEdit="false">
+               </ion-input>
+             </ion-item>
+             <ion-item>
+               <ion-input [(ngModel)]="longDest"
+                          type="text"
+                          placeholder="Longitude Destino"
+                          clearInput clearOnEdit="false">
+               </ion-input>
+             </ion-item>
+           </ion-col>
          </ion-row>
          <button ion-button block outline (click)="calcRota(latDest, longDest)">Calcular</button>
        </div>

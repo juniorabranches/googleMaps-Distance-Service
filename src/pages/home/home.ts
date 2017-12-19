@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -12,21 +12,39 @@ declare var google: any;
 
 export class HomePage {
   map: any;
+
+  latOri  = -14.5931473;
+  longOri = -56.1224024;
+
   latDest = -15.5931473;
   longDest = -56.1224024;
-  constructor(public navCtrl: NavController, public geolocation: Geolocation) {}
 
-  calcRota(latDest, lngDest) {
-    this.geolocation.getCurrentPosition().then(result => {
-      this.loadMap(result.coords.latitude, result.coords.longitude, parseFloat(latDest), parseFloat(lngDest));
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public platform:Platform) {
+    this.platform.ready().then(() => {
+      this.geolocation.getCurrentPosition().then(result => {
+        console.log('1'+result.coords.latitude)
+        this.latOri = result.coords.latitude;
+        this.longOri = result.coords.longitude;
+      }).catch(function(e) {
+        console.log('2-error')
+        alert('GPS desativado. Verifique!')
+      });
     });
   }
 
+  calcRota(latDest, lngDest) {
+    console.log(this.latOri)
+    this.loadMap(this.latOri, this.longOri, parseFloat(latDest), parseFloat(lngDest));
+  }
+
   private loadMap(latOri, lngOri, latDest, lngDest) {
+      var directionsService = new google.maps.DirectionsService;
+      var directionsDisplay = new google.maps.DirectionsRenderer;
+     directionsDisplay = new google.maps.DirectionsRenderer();
      var bounds = new google.maps.LatLngBounds;
      var markersArray = [];
 
-     var origin1 = {lat: latOri, lng: lngOri};
+     var origin1 = {lat: parseFloat(latOri), lng: parseFloat(lngOri)};
      var destinationA = {lat: latDest, lng: lngDest};
 
      var destinationIcon = 'https://chart.googleapis.com/chart?' +
@@ -37,6 +55,7 @@ export class HomePage {
        center: {lat: latOri, lng: lngOri},
        zoom: 100
      });
+     directionsDisplay.setMap(map);
      var geocoder = new google.maps.Geocoder;
 
      var service = new google.maps.DistanceMatrixService;
@@ -62,16 +81,29 @@ export class HomePage {
            return function(results, status) {
              if (status === 'OK') {
                map.fitBounds(bounds.extend(results[0].geometry.location));
-               markersArray.push(new google.maps.Marker({
+               /*markersArray.push(new google.maps.Marker({
                  map: map,
                  position: results[0].geometry.location,
                  icon: icon
-               }));
+               }));*/
              } else {
                alert('Geocode was not successful due to: ' + status);
              }
            };
          };
+
+         directionsService.route({
+           origin: origin1,
+           destination: destinationA,
+           travelMode: 'DRIVING'
+         }, function(response, status) {
+           if (status === 'OK') {
+             directionsDisplay.setDirections(response);
+           } else {
+             window.alert('Directions request failed due to ' + status);
+           }
+         });
+
 
          for (var i = 0; i < originList.length; i++) {
            var results = response.rows[i].elements;
